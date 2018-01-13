@@ -56,7 +56,7 @@ def run(channel):
             # Draw and display the corners
             gray = cv2.drawChessboardCorners(gray, (VERT_CORNERS,HORZ_CORNERS), corners2,ret)
             print("calculating calibration... %d" % (len(objpoints)))
-            # mtx: camera matrix
+            # mtx: camera matrix (includes focal length and optical centers)
             # dist: distortion coefficients
             # rvecs: rotation vectors
             # tvecs: translation vectors
@@ -70,9 +70,8 @@ def run(channel):
             gray = cv2.undistort(gray, mtx, dist, None, newcameramtx)
 
         if key & 0xFF == ord('b'):
-            data = { "matrix": mtx, "dist": dist, "newcameramtx": newcameramtx }
-            with open("calibrationvalues.json", "w") as output:
-                json.dump(data, output)
+            np.savez("calibration-values", mtx=mtx, dist=dist, newcammtx=newcameramtx)
+            break
 
         cv2.imshow('frame',gray)
     # When everything done, release the capture
