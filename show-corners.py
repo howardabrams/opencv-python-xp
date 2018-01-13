@@ -2,8 +2,12 @@ import numpy as np
 import cv2
 import glob
 
+# How many rows and columns does the images of your checkerboard show?
 ROWS = 10
 COLS = 13
+
+# The code is actually looking for the _available corners_, so we can simply
+# subtract one from the rows and columns value.
 HORZ_CORNERS = COLS-1
 VERT_CORNERS = ROWS-1
 
@@ -18,7 +22,7 @@ objp[:,:2] = np.mgrid[0:VERT_CORNERS,0:HORZ_CORNERS].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
-images = glob.glob('*.jpg')
+images = glob.glob('samples/checkerboard-*.jpg')
 
 for fname in images:
     img = cv2.imread(fname)
