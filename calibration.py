@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import json
 
 # How many rows and columns does the images of your checkerboard show?
 ROWS = 10
@@ -67,6 +68,11 @@ def run(channel):
         if mtx is not None:
             print("undistorting")
             gray = cv2.undistort(gray, mtx, dist, None, newcameramtx)
+
+        if key & 0xFF == ord('b'):
+            data = { "matrix": mtx, "dist": dist, "newcameramtx": newcameramtx }
+            with open("calibrationvalues.json", "w") as output:
+                json.dump(data, output)
 
         cv2.imshow('frame',gray)
     # When everything done, release the capture
