@@ -1,4 +1,6 @@
-import numpy as np
+# The last line (run(1)) means that we are running a camera in the first USB port
+# Change this to use the built in camera with 0
+# and if you have 2 built in cameras or have another usb device, use 2
 import cv2
 
 # How many rows and columns does the images of your checkerboard show?
